@@ -17,7 +17,7 @@ namespace Advantage.API.Controllers
         }
 
         // GET api/order/pageNumber/pageSize
-        [HttpGet("{pageIndex: int}/{pageSize: int}")]
+        [HttpGet("{pageIndex:int}/{pageSize:int}")]
         public IActionResult Get(int pageIndex, int pageSize)
         {
             var data = _ctx.Orders.Include(o => o.Customer)
@@ -57,7 +57,7 @@ namespace Advantage.API.Controllers
         public IActionResult ByCustomer(int n)
         {
             var orders = _ctx.Orders.Include(o => o.Customer).ToList();
-            var groupedResult = orders.GroupBy(o => o.Customer.Id                                                                      )
+            var groupedResult = orders.GroupBy(o => o.Customer.Id)
                                 .ToList()
                                 .Select( grp => new {
                                     Name = _ctx.Customers.Find(grp.Key).Name,
@@ -70,7 +70,7 @@ namespace Advantage.API.Controllers
             return Ok(groupedResult);
         }
 
-        [HttpGet("GetOrder/{}", Name="GetOrder")]
+        [HttpGet("GetOrder/{id}", Name="GetOrder")]
         public IActionResult GetOrder(int id)
         {
             var order = _ctx.Orders
